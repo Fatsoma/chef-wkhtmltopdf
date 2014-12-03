@@ -62,7 +62,7 @@ when 'rhel'
   else
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
   end
-  default['wkhtmltopdf']['platform'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
+  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
   if node['kernel']['machine'] == 'x86_64'
     default['wkhtmltopdf']['architecture'] = 'amd64'
   else
