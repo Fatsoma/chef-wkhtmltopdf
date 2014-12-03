@@ -27,18 +27,20 @@ when 'windows'
   end
 
 when 'debian'
+  jpeg_package = 'libjpeg8'
   platform_version = node['platform_version']
-  default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g libjpeg-turbo8 libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
   default['wkhtmltopdf']['suffix'] = 'deb'
   if platform?('debian')
     default['wkhtmltopdf']['platform'] = 'linux-wheezy'
   elsif platform?('ubuntu')
     if Chef::VersionConstraint.new('>= 14.04').include?(platform_version)
+      jpeg_package = 'libjpeg-turbo8'
       default['wkhtmltopdf']['platform'] = 'linux-trusty'
     elsif Chef::VersionConstraint.new('>= 12.04').include?(platform_version)
       default['wkhtmltopdf']['platform'] = 'linux-precise'
     end
   end
+  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g #{jpeg_package} libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
   if node['kernel']['machine'] == 'x86_64'
     default['wkhtmltopdf']['architecture'] = 'amd64'
   else

@@ -9,5 +9,6 @@ end
 
 package 'wkhtmltox' do
   source download_dest
+  provider Chef::Provider::Package::Dpkg if node['wkhtmltopdf']['suffix'] == 'deb'
   action :install
 end
