@@ -68,3 +68,4 @@ suites:
   attributes:
     wkhtmltopdf:
       install_method: source
+      lib_dir: /usr/local/lib
