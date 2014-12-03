@@ -48,13 +48,21 @@ when 'debian'
   end
 
 when 'rhel'
-  default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig libXext libXrender openssl-devel urw-fonts)
+  jpeg_package = 'libjpeg'
   default['wkhtmltopdf']['suffix'] = 'rpm'
-  if Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
+  if Chef::VersionConstraint.new('>= 7.0').include?(node['platform_version'])
+    if node['kernel']['machine'] == 'x86_64'
+      jpeg_package = 'libjpeg-turbo'
+      default['wkhtmltopdf']['platform'] = 'linux-centos7'
+    else
+      default['wkhtmltopdf']['platform'] = 'linux-centos6'
+    end
+  elsif Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
     default['wkhtmltopdf']['platform'] = 'linux-centos6'
   else
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
   end
+  default['wkhtmltopdf']['platform'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
   if node['kernel']['machine'] == 'x86_64'
     default['wkhtmltopdf']['architecture'] = 'amd64'
   else

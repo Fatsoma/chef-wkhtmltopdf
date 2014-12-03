@@ -14,6 +14,11 @@ platforms:
     box: opscode-centos-6.5
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box
     hostname: wkhtmltopdf-centos-6
+- name: centos7
+  driver_config:
+    box: opscode-centos-7.0
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-7.0_chef-provisionerless.box
+    hostname: wkhtmltopdf-centos-7
 - name: debian7
   driver_config:
     box: opscode-debian-7.2.0
