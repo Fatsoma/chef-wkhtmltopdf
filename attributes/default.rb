@@ -61,11 +61,15 @@ when 'rhel'
 
 else
   default['wkhtmltopdf']['install_method'] = 'source'
+end
+
+default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
+default['wkhtmltopdf']['mirror_url'] = "http://downloads.sourceforge.net/project/wkhtmltopdf/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
+
+if node['wkhtmltopdf']['install_method'] == 'source'
   default['wkhtmltopdf']['dependency_packages'] = []
   default['wkhtmltopdf']['suffix'] = 'tar.bz2'
   default['wkhtmltopdf']['platform'] = ''
   default['wkhtmltopdf']['architecture'] = ''
+  default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}.#{node['wkhtmltopdf']['suffix']}"
 end
-
-default['wkhtmltopdf']['archive']     = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
-default['wkhtmltopdf']['mirror_url']  = "http://downloads.sourceforge.net/project/wkhtmltopdf/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
