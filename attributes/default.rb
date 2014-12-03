@@ -27,7 +27,7 @@ when 'windows'
   end
 
 when 'debian'
-  platform_version = node[:platform_version]
+  platform_version = node['platform_version']
   default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g libjpeg-turbo8 libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
   default['wkhtmltopdf']['suffix'] = 'deb'
   if platform?('debian')
@@ -48,7 +48,7 @@ when 'debian'
 when 'rhel'
   default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig libXext libXrender openssl-devel urw-fonts)
   default['wkhtmltopdf']['suffix'] = 'rpm'
-  if Chef::VersionConstraint.new('>= 6.0').include?(node[:platform_version])
+  if Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
     default['wkhtmltopdf']['platform'] = 'linux-centos6'
   else
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
