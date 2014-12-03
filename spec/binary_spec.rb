@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'wkhtmltopdf::binary' do
-  let(:chef_run) do
+  cached(:chef_run) do
     ChefSpec::SoloRunner.new.converge(described_recipe)
   end
 
