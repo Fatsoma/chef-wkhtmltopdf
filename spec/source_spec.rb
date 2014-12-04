@@ -14,6 +14,8 @@ describe 'wkhtmltopdf::source' do
   let(:download_dest) { File.join(cache_dir, archive) }
   let(:install_dir) { '/test/bin' }
   let(:extracted_path) { File.join(cache_dir, "wkhtmltox-#{version}") }
+  let(:build_target) { 'posix-local' }
+  let(:static_build_path) { File.join(extracted_path, 'static-build', build_target, "wkhtmltox-#{version}") }
 
   it { expect(chef_run).to create_remote_file_if_missing(download_dest) }
   it 'extracts archive' do
@@ -24,16 +26,16 @@ describe 'wkhtmltopdf::source' do
   it 'compiles wkhtmltox' do
     expect(chef_run).to run_execute('compile_wkhtmltox')
       .with_cwd(extracted_path)
-      .with_command('scripts/build.py posix-local')
+      .with_command("scripts/build.py #{build_target}")
   end
   it 'installs wkhtmltoimage' do
     expect(chef_run).to run_execute('install_wkhtmltoimage')
-      .with_cwd(extracted_path)
+      .with_cwd(static_build_path)
       .with_command("cp bin/wkhtmltoimage #{install_dir}/wkhtmltoimage")
   end
   it 'installs wkhtmltopdf' do
     expect(chef_run).to run_execute('install_wkhtmltopdf')
-      .with_cwd(extracted_path)
+      .with_cwd(static_build_path)
       .with_command("cp bin/wkhtmltopdf #{install_dir}/wkhtmltopdf")
   end
 
@@ -48,6 +50,7 @@ describe 'wkhtmltopdf::source' do
 
     it do
       expect(chef_run).to run_execute('install_wkhtmltox_so')
+        .with_cwd(static_build_path)
         .with_command("cp lib/libwkhtmltox.so.#{version} #{lib_dir}/libwkhtmltox.so.#{version}")
     end
     it do
