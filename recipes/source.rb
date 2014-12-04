@@ -24,7 +24,7 @@ end
 
 execute 'install development tools' do
   command 'yum -d0 -e0 -y groupinstall "Development Tools"'
-  only_if node['platform_family'] == 'rhel'
+  only_if { node['platform_family'] == 'rhel' }
 end
 
 # Bug in build script with location to run tar from
@@ -37,6 +37,7 @@ if node['wkhtmltopdf']['version'] == '0.12.1'
   execute 'patch_wkhtmltox_build' do
     cwd extracted_path
     command 'patch -N -p0 < build_fixtar.patch'
+    not_if %(grep -B1 'tar -c -v -f' scripts/build.py | grep -q 'os\.chdir(os\.path\.join(basedir, config))')
   end
 end
 
