@@ -1,6 +1,7 @@
 cache_dir = Chef::Config[:file_cache_path]
 download_dest = File.join(cache_dir, node['wkhtmltopdf']['archive'])
 wkhtmltopdf_version = Chef::Version.new(node['wkhtmltopdf']['version'])
+extracted_path = File.join(cache_dir, node['wkhtmltopdf']['extracted_name'])
 
 remote_file download_dest do
   source node['wkhtmltopdf']['mirror_url']
@@ -11,31 +12,31 @@ end
 execute 'extract_wkhtmltopdf' do
   cwd cache_dir
   command "tar -xjf #{download_dest}"
-  creates File.join(cache_dir, 'wkhtmltox')
+  creates extracted_path
 end
 
 execute 'compile_wkhtmltox' do
-  cwd File.join(cache_dir, 'wkhtmltox')
+  cwd extracted_path
   command 'make'
-  creates File.join(cache_dir, 'wkhtmltox', 'usr')
+  creates File.join(extracted_path, 'usr')
 end
 
 execute 'install_wkhtmltoimage' do
-  cwd cache_dir
-  command "cp wkhtmltox/bin/wkhtmltoimage #{node['wkhtmltopdf']['install_dir']}/wkhtmltoimage"
+  cwd extracted_path
+  command "cp bin/wkhtmltoimage #{node['wkhtmltopdf']['install_dir']}/wkhtmltoimage"
   creates "#{node['wkhtmltopdf']['install_dir']}/wkhtmltoimage"
 end
 
 execute 'install_wkhtmltopdf' do
-  cwd cache_dir
-  command "cp wkhtmltox/bin/wkhtmltopdf #{node['wkhtmltopdf']['install_dir']}/wkhtmltopdf"
+  cwd extracted_path
+  command "cp bin/wkhtmltopdf #{node['wkhtmltopdf']['install_dir']}/wkhtmltopdf"
   creates "#{node['wkhtmltopdf']['install_dir']}/wkhtmltopdf"
 end
 
 unless node['wkhtmltopdf']['lib_dir'].empty?
   execute 'install_wkhtmltox_so' do
-    cwd cache_dir
-    command "cp wkhtmltox/lib/libwkhtmltox.so.#{node['wkhtmltopdf']['version']} #{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{node['wkhtmltopdf']['version']}"
+    cwd extracted_path
+    command "cp lib/libwkhtmltox.so.#{node['wkhtmltopdf']['version']} #{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{node['wkhtmltopdf']['version']}"
     creates "#{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{node['wkhtmltopdf']['version']}"
   end
 
