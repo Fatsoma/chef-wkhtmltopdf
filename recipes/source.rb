@@ -17,7 +17,7 @@ end
 
 execute 'compile_wkhtmltox' do
   cwd extracted_path
-  command 'make'
+  command "scripts/build.py #{node['wkhtmltopdf']['build_target']}"
   creates File.join(extracted_path, 'usr')
 end
 

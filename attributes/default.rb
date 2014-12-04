@@ -80,6 +80,7 @@ if node['wkhtmltopdf']['install_method'] == 'source'
   default['wkhtmltopdf']['architecture'] = ''
   default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}.#{node['wkhtmltopdf']['suffix']}"
   default['wkhtmltopdf']['extracted_name'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}"
+  default['wkhtmltopdf']['build_target'] = 'posix-local'
 else
   default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
 end
