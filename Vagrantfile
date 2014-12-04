@@ -7,20 +7,20 @@ Vagrant.configure('2') do |config|
   config.omnibus.chef_version = :latest
 
   config.vm.define :centos5 do |centos5|
-    centos5.vm.box      = 'opscode-centos-5.10'
-    centos5.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.10_chef-provisionerless.box'
+    centos5.vm.box      = 'opscode-centos-5.11'
+    centos5.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.11_chef-provisionerless.box'
     centos5.vm.hostname = "#{cookbook}-centos-5"
   end
 
   config.vm.define :centos6 do |centos6|
-    centos6.vm.box      = 'opscode-centos-6.5'
-    centos6.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.5_chef-provisionerless.box'
+    centos6.vm.box      = 'opscode-centos-6.6'
+    centos6.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.6_chef-provisionerless.box'
     centos6.vm.hostname = "#{cookbook}-centos-6"
   end
 
   config.vm.define :debian7 do |debian7|
-    debian7.vm.box      = 'opscode-debian-7.2.0'
-    debian7.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.2.0_chef-provisionerless.box'
+    debian7.vm.box      = 'opscode-debian-7.7'
+    debian7.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_debian-7.7_chef-provisionerless.box'
     debian7.vm.hostname = "#{cookbook}-debian-7"
   end
 
@@ -42,10 +42,10 @@ Vagrant.configure('2') do |config|
     fedora20.vm.hostname = "#{cookbook}-fedora-20"
   end
 
-  config.vm.define :freebsd9 do |freebsd9|
-    freebsd9.vm.box      = 'opscode-freebsd-9.2'
-    freebsd9.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-9.2_chef-provisionerless.box'
-    freebsd9.vm.hostname = "#{cookbook}-freebsd-9"
+  config.vm.define :freebsd10 do |freebsd10|
+    freebsd10.vm.box      = 'opscode-freebsd-10.1'
+    freebsd10.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-10.1_chef-provisionerless.box'
+    freebsd10.vm.hostname = "#{cookbook}-freebsd-10"
   end
 
   config.vm.define :ubuntu1204 do |ubuntu1204|
@@ -54,16 +54,10 @@ Vagrant.configure('2') do |config|
     ubuntu1204.vm.hostname = "#{cookbook}-ubuntu-1204"
   end
 
-  config.vm.define :ubuntu1304 do |ubuntu1304|
-    ubuntu1304.vm.box      = 'opscode-ubuntu-13.04'
-    ubuntu1304.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-13.04_chef-provisionerless.box'
-    ubuntu1304.vm.hostname = "#{cookbook}-ubuntu-1304"
-  end
-
-  config.vm.define :ubuntu1310 do |ubuntu1310|
-    ubuntu1310.vm.box      = 'opscode-ubuntu-13.10'
-    ubuntu1310.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-13.10_chef-provisionerless.box'
-    ubuntu1310.vm.hostname = "#{cookbook}-ubuntu-1310"
+  config.vm.define :ubuntu1404 do |ubuntu1404|
+    ubuntu1404.vm.box      = 'opscode-ubuntu-14.04'
+    ubuntu1404.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-14.04_chef-provisionerless.box'
+    ubuntu1404.vm.hostname = "#{cookbook}-ubuntu-1404"
   end
 
   config.vm.network :private_network, ip: '192.168.50.10'
