@@ -55,7 +55,7 @@ describe 'wkhtmltopdf::source' do
     it 'patches build.py' do
       expect(chef_run).to run_execute('patch_wkhtmltox_build')
         .with_cwd(extracted_path)
-        .with_command('patch -p0 < build_fixtar.patch')
+        .with_command('patch -N -p0 < build_fixtar.patch')
     end
   end
 

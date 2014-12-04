@@ -37,7 +37,7 @@ if node['wkhtmltopdf']['version'] == '0.12.1'
   end
   execute 'patch_wkhtmltox_build' do
     cwd extracted_path
-    command 'patch -p0 < build_fixtar.patch'
+    command 'patch -N -p0 < build_fixtar.patch'
   end
 end
 
