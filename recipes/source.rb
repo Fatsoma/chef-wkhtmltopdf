@@ -37,14 +37,14 @@ if node['wkhtmltopdf']['version'] == '0.12.1'
   execute 'patch_wkhtmltox_build' do
     cwd extracted_path
     command 'patch -N -p0 < build_fixtar.patch'
-    not_if %(grep -B1 'tar -c -v -f' scripts/build.py | grep -q 'os\.chdir(os\.path\.join(basedir, config))')
+    not_if %(sh -c 'grep -B1 "tar -c -v -f" scripts/build.py | grep -q "os\\.chdir(os\\.path\\.join(basedir, config))"')
   end
 end
 
-execute 'compile_wkhtmltox' do
+execute 'build_wkhtmltox' do
   cwd extracted_path
   command "scripts/build.py #{node['wkhtmltopdf']['build_target']}"
-  creates static_build_path
+  creates File.join(static_build_path, 'bin', 'wkhtmltopdf')
 end
 
 execute 'install_wkhtmltoimage' do
