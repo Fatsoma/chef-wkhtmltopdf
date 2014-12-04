@@ -22,10 +22,9 @@ execute 'extract_wkhtmltopdf' do
   creates extracted_path
 end
 
-if node['platform_family'] == 'rhel'
-  execute 'install development tools' do
-    command 'yum -d0 -e0 -y groupinstall "Development Tools"'
-  end
+execute 'install development tools' do
+  command 'yum -d0 -e0 -y groupinstall "Development Tools"'
+  only_if node['platform_family'] == 'rhel'
 end
 
 # Bug in build script with location to run tar from
