@@ -58,7 +58,7 @@ platforms:
 suites:
 - name: default
   run_list: ["recipe[wkhtmltopdf]"]
-  exclude:
+  excludes:
   - fedora18
   - fedora19
   - fedora20
