@@ -49,11 +49,6 @@ platforms:
     box: opscode-ubuntu-12.04
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.04_chef-provisionerless.box
     hostname: wkhtmltopdf-ubuntu-1204
-- name: ubuntu1210
-  driver_config:
-    box: opscode-ubuntu-12.10
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.10_chef-provisionerless.box
-    hostname: wkhtmltopdf-ubuntu-1210
 - name: ubuntu1304
   driver_config:
     box: opscode-ubuntu-13.04

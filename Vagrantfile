@@ -54,12 +54,6 @@ Vagrant.configure('2') do |config|
     ubuntu1204.vm.hostname = "#{cookbook}-ubuntu-1204"
   end
 
-  config.vm.define :ubuntu1210 do |ubuntu1210|
-    ubuntu1210.vm.box      = 'opscode-ubuntu-12.10'
-    ubuntu1210.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-12.10_chef-provisionerless.box'
-    ubuntu1210.vm.hostname = "#{cookbook}-ubuntu-1210"
-  end
-
   config.vm.define :ubuntu1304 do |ubuntu1304|
     ubuntu1304.vm.box      = 'opscode-ubuntu-13.04'
     ubuntu1304.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_ubuntu-13.04_chef-provisionerless.box'
