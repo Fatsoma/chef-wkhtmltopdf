@@ -71,10 +71,24 @@ when 'rhel'
 
 else
   default['wkhtmltopdf']['install_method'] = 'source'
+  default['wkhtmltopdf']['dependency_packages'] = []
 end
 
 if node['wkhtmltopdf']['install_method'] == 'source'
-  default['wkhtmltopdf']['dependency_packages'] = []
+  case node['platform_family']
+  when 'debian'
+    jpeg_package = 'libjpeg8-dev'
+    if platform?('ubuntu') && Chef::VersionConstraint.new('>= 14.04').include?(platform_version)
+      jpeg_package = 'libjpeg-turbo8-dev'
+    end
+    default['wkhtmltopdf']['dependency_packages'] = %W(build-essential libfontconfig-dev libfreetype6-dev libpng12-0-dev zlib1g-dev #{jpeg_package} libssl-dev libx11-dev libxext-dev libxrender-dev libc6-dev)
+  when 'rhel'
+    jpeg_package = 'libjpeg-devel'
+    if Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
+      jpeg_package = 'libjpeg-turbo-devel'
+    end
+    default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig-devel freetype-devel libpng-devel zlib-devel #{jpeg_package} openssl-devel libX11-devel libXext-devel libXrender-devel libstdc++-devel glibc-devel)
+  end
   default['wkhtmltopdf']['suffix'] = 'tar.bz2'
   default['wkhtmltopdf']['platform'] = ''
   default['wkhtmltopdf']['architecture'] = ''

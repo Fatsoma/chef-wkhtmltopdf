@@ -22,6 +22,12 @@ execute 'extract_wkhtmltopdf' do
   creates extracted_path
 end
 
+if node['platform_family'] == 'rhel'
+  execute 'install development tools' do
+    command 'yum -d0 -e0 -y groupinstall "Development Tools"'
+  end
+end
+
 # Bug in build script with location to run tar from
 # Fixed upstream in 0.12.2
 if node['wkhtmltopdf']['version'] == '0.12.1'
