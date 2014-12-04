@@ -7,8 +7,21 @@ remote_file download_dest do
   action :create_if_missing
 end
 
-package 'wkhtmltox' do
-  source download_dest
-  provider Chef::Provider::Package::Dpkg if node['wkhtmltopdf']['suffix'] == 'deb'
-  action :install
+case node['platform_family']
+when 'mac_os_x', 'mac_os_x_server'
+  execute 'install_wkhtmltox' do
+    command "installer -pkg #{download_dest} -target /"
+  end
+when 'windows'
+  execute 'install_wkhtmltox' do
+    command download_dest
+  end
+when 'debian'
+  dpkg_package 'wkhtmltox' do
+    source download_dest
+  end
+when 'rhel'
+  rpm_package 'wkhtmltox' do
+    source download_dest
+  end
 end

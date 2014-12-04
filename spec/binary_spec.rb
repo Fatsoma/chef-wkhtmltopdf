@@ -18,9 +18,8 @@ describe 'wkhtmltopdf::binary' do
     it { expect(chef_run).to create_remote_file_if_missing(download_dest) }
 
     it do
-      expect(chef_run).to install_package('wkhtmltox')
+      expect(chef_run).to install_dpkg_package('wkhtmltox')
         .with_source(download_dest)
-        .with_provider(Chef::Provider::Package::Dpkg)
     end
   end
 
@@ -37,7 +36,7 @@ describe 'wkhtmltopdf::binary' do
     it { expect(chef_run).to create_remote_file_if_missing(download_dest) }
 
     it do
-      expect(chef_run).to install_package('wkhtmltox')
+      expect(chef_run).to install_rpm_package('wkhtmltox')
         .with_source(download_dest)
     end
   end
