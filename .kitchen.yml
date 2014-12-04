@@ -69,3 +69,4 @@ suites:
     wkhtmltopdf:
       install_method: source
       lib_dir: /usr/local/lib
+      build_cache_path: /var/cache/chef/wkhtmltopdf

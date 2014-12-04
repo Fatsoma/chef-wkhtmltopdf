@@ -1,4 +1,8 @@
-cache_dir = Chef::Config[:file_cache_path]
+if node['wkhtmltopdf']['build_cache_path'].blank?
+  cache_dir = Chef::Config[:file_cache_path]
+else
+  cache_dir = node['wkhtmltopdf']['build_cache_path']
+end
 download_dest = File.join(cache_dir, node['wkhtmltopdf']['archive'])
 wkhtmltopdf_version = Chef::Version.new(node['wkhtmltopdf']['version'])
 extracted_path = File.join(cache_dir, node['wkhtmltopdf']['extracted_name'])
