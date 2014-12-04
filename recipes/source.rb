@@ -16,6 +16,19 @@ execute 'extract_wkhtmltopdf' do
   creates extracted_path
 end
 
+# Bug in build script with location to run tar from
+# Fixed upstream in 0.12.2
+if node['wkhtmltopdf']['version'] == '0.12.1'
+  cookbook_file File.join(extracted_path, 'build_fixtar.patch') do
+    source 'build_fixtar.patch'
+    mode 0644
+  end
+  execute 'patch_wkhtmltox_build' do
+    cwd extracted_path
+    command 'patch -p0 < build_fixtar.patch'
+  end
+end
+
 execute 'compile_wkhtmltox' do
   cwd extracted_path
   command "scripts/build.py #{node['wkhtmltopdf']['build_target']}"

@@ -39,6 +39,26 @@ describe 'wkhtmltopdf::source' do
       .with_command("cp bin/wkhtmltopdf #{install_dir}/wkhtmltopdf")
   end
 
+  context 'with version 0.12.1' do
+    let(:version) { '0.12.1' }
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new do |node|
+        node.set['wkhtmltopdf']['install_method'] = 'source'
+        node.set['wkhtmltopdf']['version'] = version
+      end.converge(described_recipe)
+    end
+
+    it 'creates build patch file' do
+      expect(chef_run).to render_file(File.join(extracted_path, 'build_fixtar.patch'))
+    end
+
+    it 'patches build.py' do
+      expect(chef_run).to run_execute('patch_wkhtmltox_build')
+        .with_cwd(extracted_path)
+        .with_command('patch -p0 < build_fixtar.patch')
+    end
+  end
+
   context 'with lib_dir' do
     let(:lib_dir) { '/usr/local/lib' }
     cached(:chef_run) do
