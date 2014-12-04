@@ -58,6 +58,11 @@ platforms:
 suites:
 - name: default
   run_list: ["recipe[wkhtmltopdf]"]
+  exclude:
+  - fedora18
+  - fedora19
+  - fedora20
+  - freebsd10
 - name: source
   run_list: ["recipe[wkhtmltopdf]"]
   attributes:
