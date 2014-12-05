@@ -8,10 +8,6 @@ describe 'wkhtmltopdf::source' do
     end.converge(described_recipe)
   end
 
-  before do
-    stub_command(%(sh -c 'grep -B1 "tar -c -v -f" scripts/build.py | grep -q "os\\.chdir(os\\.path\\.join(basedir, config))"')).and_return(false)
-  end
-
   let(:cache_dir) { Chef::Config[:file_cache_path] }
   let(:version) { '0.12.1' }
   let(:archive) { "wkhtmltox-#{version}.tar.bz2" }

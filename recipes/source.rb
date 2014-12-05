@@ -42,7 +42,7 @@ if node['wkhtmltopdf']['version'] == '0.12.1'
   execute 'patch_wkhtmltox_build' do
     cwd extracted_path
     command 'patch -N -p0 < build_fixtar.patch'
-    not_if %(sh -c 'grep -B1 "tar -c -v -f" scripts/build.py | grep -q "os\\.chdir(os\\.path\\.join(basedir, config))"')
+    returns [0, 1]
   end
 end
 
