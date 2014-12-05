@@ -20,7 +20,7 @@ when 'debian'
   dpkg_package 'wkhtmltox' do
     source download_dest
   end
-when 'rhel'
+when 'rhel', 'fedora'
   rpm_package 'wkhtmltox' do
     source download_dest
   end

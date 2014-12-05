@@ -24,7 +24,7 @@ end
 
 execute 'install development tools' do
   command 'yum -d0 -e0 -y groupinstall "Development Tools"'
-  only_if { node['platform_family'] == 'rhel' }
+  only_if { %w(rhel fedora).include?(node['platform_family']) }
 end
 
 link '/usr/local/bin/python' do

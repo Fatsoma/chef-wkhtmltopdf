@@ -47,10 +47,13 @@ when 'debian'
     default['wkhtmltopdf']['architecture'] = 'i386'
   end
 
-when 'rhel'
+when 'rhel', 'fedora'
   jpeg_package = 'libjpeg'
   default['wkhtmltopdf']['suffix'] = 'rpm'
-  if Chef::VersionConstraint.new('>= 7.0').include?(node['platform_version'])
+  if node['platform_family'] == 'fedora'
+    jpeg_package = 'libjpeg-turbo'
+    default['wkhtmltopdf']['platform'] = 'linux-centos6'
+  elsif Chef::VersionConstraint.new('>= 7.0').include?(node['platform_version'])
     if node['kernel']['machine'] == 'x86_64'
       jpeg_package = 'libjpeg-turbo'
       default['wkhtmltopdf']['platform'] = 'linux-centos7'
@@ -82,9 +85,9 @@ if node['wkhtmltopdf']['install_method'] == 'source'
       jpeg_package = 'libjpeg-turbo8-dev'
     end
     default['wkhtmltopdf']['dependency_packages'] = %W(build-essential libfontconfig-dev libfreetype6-dev libpng12-0-dev zlib1g-dev #{jpeg_package} libssl-dev libx11-dev libxext-dev libxrender-dev libc6-dev)
-  when 'rhel'
+  when 'rhel', 'fedora'
     jpeg_package = 'libjpeg-devel'
-    if Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
+    if node['platform_family'] == 'fedora' || Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
       jpeg_package = 'libjpeg-turbo-devel'
     end
     default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig-devel freetype-devel libpng-devel zlib-devel #{jpeg_package} openssl-devel libX11-devel libXext-devel libXrender-devel libstdc++-devel glibc-devel)
