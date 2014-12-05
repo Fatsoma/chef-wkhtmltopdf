@@ -84,7 +84,7 @@ if node['wkhtmltopdf']['install_method'] == 'source'
     if platform?('ubuntu') && Chef::VersionConstraint.new('>= 14.04').include?(platform_version)
       jpeg_package = 'libjpeg-turbo8-dev'
     end
-    default['wkhtmltopdf']['dependency_packages'] = %W(build-essential libfontconfig-dev libfreetype6-dev libpng12-0-dev zlib1g-dev #{jpeg_package} libssl-dev libx11-dev libxext-dev libxrender-dev libc6-dev)
+    default['wkhtmltopdf']['dependency_packages'] = %W(build-essential libfontconfig-dev libfreetype6-dev libpng12-0-dev zlib1g-dev #{jpeg_package} libssl-dev libx11-dev libxext-dev libxrender-dev libstdc++-dev libc6-dev)
   when 'rhel', 'fedora'
     jpeg_package = 'libjpeg-devel'
     if node['platform_family'] == 'fedora' || Chef::VersionConstraint.new('>= 6.0').include?(node['platform_version'])
