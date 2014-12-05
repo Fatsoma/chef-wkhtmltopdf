@@ -27,6 +27,11 @@ execute 'install development tools' do
   only_if { node['platform_family'] == 'rhel' }
 end
 
+link '/usr/local/bin/python' do
+  to '/usr/local/bin/python2'
+  only_if { node['platform_family'] == 'freebsd' }
+end
+
 # Bug in build script with location to run tar from
 # Fixed upstream in 0.12.2
 if node['wkhtmltopdf']['version'] == '0.12.1'

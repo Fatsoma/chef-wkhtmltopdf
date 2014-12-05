@@ -88,6 +88,8 @@ if node['wkhtmltopdf']['install_method'] == 'source'
       jpeg_package = 'libjpeg-turbo-devel'
     end
     default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig-devel freetype-devel libpng-devel zlib-devel #{jpeg_package} openssl-devel libX11-devel libXext-devel libXrender-devel libstdc++-devel glibc-devel)
+  when 'freebsd'
+    default['wkhtmltopdf']['dependency_packages'] = %w(gcc)
   end
   default['wkhtmltopdf']['suffix'] = 'tar.bz2'
   default['wkhtmltopdf']['platform'] = ''

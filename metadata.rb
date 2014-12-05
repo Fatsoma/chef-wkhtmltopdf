@@ -18,3 +18,4 @@ supports 'redhat'
 supports 'ubuntu'
 
 depends 'apt'
+depends 'freebsd'
