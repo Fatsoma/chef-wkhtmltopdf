@@ -1,5 +1,5 @@
 cache_dir = node['wkhtmltopdf']['build_cache_path']
-if cache_dir.nil? || cache_dir == ''
+if cache_dir.nil? || cache_dir.empty?
   cache_dir = Chef::Config[:file_cache_path]
 else
   FileUtils.mkdir_p(cache_dir)
