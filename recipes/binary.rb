@@ -26,5 +26,7 @@ when 'rhel', 'fedora'
     source download_dest
   end
 when 'freebsd'
-  package 'wkhtmltopdf'
+  package 'wkhtmltopdf' do
+    version node['wkhtmltopdf']['version']
+  end
 end
