@@ -92,7 +92,7 @@ if node['wkhtmltopdf']['install_method'] == 'source'
     end
     default['wkhtmltopdf']['dependency_packages'] = %W(patch gcc-c++ fontconfig-devel freetype-devel libpng-devel zlib-devel #{jpeg_package} openssl-devel libX11-devel libXext-devel libXrender-devel libstdc++-devel glibc-devel)
   when 'freebsd'
-    default['wkhtmltopdf']['dependency_packages'] = %w(gcc)
+    default['wkhtmltopdf']['dependency_packages'] = %w(gcc fontconfig png jpeg)
   end
   default['wkhtmltopdf']['suffix'] = 'tar.bz2'
   default['wkhtmltopdf']['platform'] = ''
