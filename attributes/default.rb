@@ -72,6 +72,9 @@ when 'rhel', 'fedora'
     default['wkhtmltopdf']['architecture'] = 'i386'
   end
 
+when 'freebsd'
+  default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig freetype2 jpeg png libiconv libX11 libXext libXrender)
+
 else
   default['wkhtmltopdf']['install_method'] = 'source'
   default['wkhtmltopdf']['dependency_packages'] = []
@@ -92,7 +95,7 @@ if node['wkhtmltopdf']['install_method'] == 'source'
     end
     default['wkhtmltopdf']['dependency_packages'] = %W(patch gcc-c++ fontconfig-devel freetype-devel libpng-devel zlib-devel #{jpeg_package} openssl-devel libX11-devel libXext-devel libXrender-devel libstdc++-devel glibc-devel)
   when 'freebsd'
-    default['wkhtmltopdf']['dependency_packages'] = %w(gcc fontconfig png jpeg)
+    default['wkhtmltopdf']['dependency_packages'] = %w(gcc fontconfig freetype2 jpeg png gmake libX11 libXext libXrender perl5.16 libiconv)
   end
   default['wkhtmltopdf']['suffix'] = 'tar.bz2'
   default['wkhtmltopdf']['platform'] = ''
