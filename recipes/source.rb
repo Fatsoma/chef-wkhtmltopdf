@@ -27,9 +27,19 @@ execute 'install development tools' do
   only_if { %w(rhel fedora).include?(node['platform_family']) }
 end
 
-link '/usr/local/bin/python' do
-  to '/usr/local/bin/python2'
-  only_if { node['platform_family'] == 'freebsd' }
+if node['platform_family'] == 'freebsd'
+  link '/usr/local/bin/python' do
+    to '/usr/local/bin/python2'
+  end
+  script 'symlink gcc' do
+    code %(
+      ver=`pkg query '%v' gcc | sed -e 's/\\.//' -e 's/\\..*$//'`
+      [ "x${ver}" != "x" ] && \
+        sudo ln -sf /usr/local/bin/gcc${ver} /usr/local/bin/gcc && \
+        sudo ln -sf /usr/local/bin/g++${ver} /usr/local/bin/g++
+    )
+    interpreter '/bin/sh'
+  end
 end
 
 # Bug in build script with location to run tar from
