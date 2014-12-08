@@ -60,6 +60,7 @@ execute 'build_wkhtmltox' do
   cwd extracted_path
   command "scripts/build.py #{node['wkhtmltopdf']['build_target']}"
   creates File.join(static_build_path, 'bin', 'wkhtmltopdf')
+  timeout 14_400
 end
 
 execute 'install_wkhtmltoimage' do
