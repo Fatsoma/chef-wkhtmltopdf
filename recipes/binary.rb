@@ -5,6 +5,7 @@ remote_file download_dest do
   source node['wkhtmltopdf']['mirror_url']
   mode '0644'
   action :create_if_missing
+  not_if { node['platform_family'] == 'freebsd10' }
 end
 
 case node['platform_family']
@@ -24,4 +25,6 @@ when 'rhel', 'fedora'
   rpm_package 'wkhtmltox' do
     source download_dest
   end
+when 'freebsd'
+  package 'wkhtmltopdf'
 end

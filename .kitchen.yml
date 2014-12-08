@@ -78,8 +78,6 @@ platforms:
 suites:
 - name: default
   run_list: ["recipe[wkhtmltopdf]"]
-  excludes:
-  - freebsd10
 - name: source
   run_list: ["recipe[wkhtmltopdf]"]
   attributes:
