@@ -5,7 +5,7 @@ remote_file download_dest do
   source node['wkhtmltopdf']['mirror_url']
   mode '0644'
   action :create_if_missing
-  not_if { node['platform_family'] == 'freebsd10' }
+  not_if { node['platform_family'] == 'freebsd' }
 end
 
 case node['platform_family']
