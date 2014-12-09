@@ -5,10 +5,16 @@ describe 'wkhtmltopdf::source' do
     ChefSpec::SoloRunner.new do |node|
       node.set['wkhtmltopdf']['install_method'] = 'source'
       node.set['wkhtmltopdf']['install_dir'] = install_dir
+      node.set['wkhtmltopdf']['build_cache_path'] = cache_dir
     end.converge(described_recipe)
   end
 
-  let(:cache_dir) { Chef::Config[:file_cache_path] }
+  before do
+    stub_command("test -f #{extracted_path}/static-build/wkhtmltox-#{version}_local-`hostname`.tar.xz").and_return(false)
+    allow(FileUtils).to receive(:mkdir_p).with(cache_dir).and_return(true)
+  end
+
+  let(:cache_dir) { '/test/cache' }
   let(:version) { '0.12.1' }
   let(:archive) { "wkhtmltox-#{version}.tar.bz2" }
   let(:download_dest) { File.join(cache_dir, archive) }
@@ -45,6 +51,7 @@ describe 'wkhtmltopdf::source' do
       ChefSpec::SoloRunner.new do |node|
         node.set['wkhtmltopdf']['install_method'] = 'source'
         node.set['wkhtmltopdf']['version'] = version
+        node.set['wkhtmltopdf']['build_cache_path'] = cache_dir
       end.converge(described_recipe)
     end
 
@@ -65,6 +72,7 @@ describe 'wkhtmltopdf::source' do
       ChefSpec::SoloRunner.new do |node|
         node.set['wkhtmltopdf']['install_method'] = 'source'
         node.set['wkhtmltopdf']['lib_dir'] = lib_dir
+        node.set['wkhtmltopdf']['build_cache_path'] = cache_dir
       end.converge(described_recipe)
     end
 

@@ -40,4 +40,17 @@ describe 'wkhtmltopdf::binary' do
         .with_source(download_dest)
     end
   end
+
+  context 'for freebsd' do
+    cached(:chef_run) do
+      ChefSpec::SoloRunner.new(platform: 'freebsd', version: '9.2')
+        .converge(described_recipe)
+    end
+
+    it do
+      expect(chef_run).to install_package('wkhtmltopdf')
+        .with_provider(Chef::Provider::Package::Freebsd::Pkgng)
+        .with_version(version)
+    end
+  end
 end
