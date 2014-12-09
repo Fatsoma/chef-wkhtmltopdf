@@ -60,6 +60,7 @@ execute 'build_wkhtmltox' do
   cwd extracted_path
   command "scripts/build.py #{node['wkhtmltopdf']['build_target']}"
   creates File.join(static_build_path, 'bin', 'wkhtmltopdf')
+  not_if "test -f #{extracted_path}/static-build/wkhtmltox-#{node['wkhtmltopdf']['version']}_local-`hostname`.tar.xz"
   timeout 14_400
 end
 
