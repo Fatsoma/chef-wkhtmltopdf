@@ -42,6 +42,12 @@ Vagrant.configure('2') do |config|
     fedora20.vm.hostname = "#{cookbook}-fedora-20"
   end
 
+  config.vm.define :freebsd9 do |freebsd9|
+    freebsd9.vm.box      = 'opscode-freebsd-9.2'
+    freebsd9.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-9.2_chef-provisionerless.box'
+    freebsd9.vm.hostname = "#{cookbook}-freebsd-9"
+  end
+
   config.vm.define :freebsd10 do |freebsd10|
     freebsd10.vm.box      = 'opscode-freebsd-10.1'
     freebsd10.vm.box_url  = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-10.1_chef-provisionerless.box'

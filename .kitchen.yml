@@ -53,6 +53,16 @@ platforms:
     box: opscode-fedora-20
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_fedora-20_chef-provisionerless.box
     hostname: wkhtmltopdf-fedora-20
+- name: freebsd9
+  driver_config:
+    customize:
+      memory: 1024
+    box: opscode-freebsd-9.2
+    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-9.2_chef-provisionerless.box
+    hostname: wkhtmltopdf-freebsd-9
+    ssh:
+      shell:
+        /bin/sh
 - name: freebsd10
   driver_config:
     customize:
