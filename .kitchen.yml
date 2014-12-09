@@ -60,6 +60,9 @@ platforms:
     box: opscode-freebsd-10.1
     box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_freebsd-10.1_chef-provisionerless.box
     hostname: wkhtmltopdf-freebsd-10
+    ssh:
+      shell:
+        /bin/sh
 - name: ubuntu1204
   driver_config:
     customize:
