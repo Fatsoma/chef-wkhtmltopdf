@@ -26,6 +26,12 @@ when 'rhel', 'fedora'
     source download_dest
   end
 when 'freebsd'
+  # Force support pkgng as it seems to check before freebsd::pkgng is run
+  Chef::Resource::FreebsdPackage.class_eval do
+    def supports_pkgng?
+      true
+    end
+  end
   package 'wkhtmltopdf' do
     version node['wkhtmltopdf']['version']
   end
