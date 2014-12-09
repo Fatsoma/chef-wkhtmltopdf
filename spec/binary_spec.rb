@@ -49,7 +49,6 @@ describe 'wkhtmltopdf::binary' do
 
     it do
       expect(chef_run).to install_package('wkhtmltopdf')
-        .with_provider(Chef::Provider::Package::Freebsd::Pkgng)
         .with_version(version)
     end
   end
