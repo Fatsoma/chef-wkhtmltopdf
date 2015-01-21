@@ -7,7 +7,7 @@ when 'freebsd'
   end
 
   describe command('pkg query %v wkhtmltopdf'), if: os[:release].to_f < 10.0 do
-    its(:stdout) { should match(/\b0\.12\.1\b/) }
+    its(:stdout) { should match(/\b0\.12\.1(?:_.*)?\b/) }
     its(:exit_status) { should eq(0) }
   end
 
