@@ -1,4 +1,5 @@
 default['wkhtmltopdf']['version']        = '0.12.1'
+default['wkhtmltopdf']['archived_version'] = true
 default['wkhtmltopdf']['install_method'] = 'binary'
 default['wkhtmltopdf']['install_dir']    = '/usr/local/bin'
 default['wkhtmltopdf']['lib_dir']        = ''
@@ -108,4 +109,5 @@ else
   default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
 end
 
-default['wkhtmltopdf']['mirror_url'] = "http://downloads.sourceforge.net/project/wkhtmltopdf/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
+archive_url = 'archive/' if node['wkhtmltopdf']['archived_version']
+default['wkhtmltopdf']['mirror_url'] = "http://downloads.sourceforge.net/project/wkhtmltopdf/#{archive_url}#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
