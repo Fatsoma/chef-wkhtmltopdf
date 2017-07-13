@@ -1,4 +1,4 @@
-# chef-wkhtmltopdf [![Build Status](https://secure.travis-ci.org/bflad/chef-wkhtmltopdf.png?branch=master)](http://travis-ci.org/bflad/chef-wkhtmltopdf)
+# chef-wkhtmltopdf
 
 ## Description
 
@@ -8,6 +8,7 @@ Cookbook Compatibility:
  * chef-wkhtmltopdf 0.1.0: wkhtmltopdf 0.11.0_rc1
  * chef-wkhtmltopdf 0.2.0: wkhtmltopdf 0.12.0
  * chef-wkhtmltopdf 0.3.0: wkhtmltopdf 0.12.1
+ * chef-wkhtmltopdf 0.4.0: wkhtmltopdf 0.12.1 to 0.12.4
 
 ## Requirements
 
@@ -28,21 +29,21 @@ Cookbook Compatibility:
 
 These attributes are under the `node['wkhtmltopdf']` namespace.
 
-Attribute | Description | Type | Default
-----------|-------------|------|--------
-archive | wkhtmltopdf archive name | String | `wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}`
-dependency_packages | Packages that contain wkhtmltopdf dependencies | String | (auto-detected, see attributes/default.rb)
-install_dir | directory to install with source | String | /usr/local/bin
-lib_dir | directory to install libraries | String | ''
-mirror_url | URL for wkhtmltopdf | String | (auto-detected, see attributes/default.rb)
-suffix | wkhtmltopdf suffix | String | (auto-detected, see attributes/default.rb)
-platform | wkhtmltopdf platform | String | (auto-detected, see attributes/default.rb)
-architecture | wkhtmltopdf architecture | String | (auto-detected, see attributes/default.rb)
-version | wkhtmltopdf version to install | String | 0.12.1
+Attribute      | Description                      | Type   | Default
+---------------|----------------------------------|--------|--------
+`archive`      | wkhtmltopdf archive name         | String | `wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}`
+`dependency_packages` | Packages that contain wkhtmltopdf dependencies | String | (auto-detected, see attributes/default.rb)
+`install_dir`  | directory to install with source | String | `/usr/local/bin`
+`lib_dir`      | directory to install libraries   | String | `''`
+`mirror_url`   | URL for wkhtmltopdf              | String | (auto-detected, see attributes/default.rb)
+`suffix`       | wkhtmltopdf suffix               | String | (auto-detected, see attributes/default.rb)
+`platform`     | wkhtmltopdf platform             | String | (auto-detected, see attributes/default.rb)
+`architecture` | wkhtmltopdf architecture         | String | (auto-detected, see attributes/default.rb)
+`version`      | wkhtmltopdf version to install   | String | 0.12.4
 
 ## Recipes
 
-* `recipe[wkhtmltopdf]` Installs wkhtmltoimage and wkhtmltopdf
+* `recipe[wkhtmltopdf]` Installs wkhtmltoimage and wkhtmltopdf using install method from `node['wkhtmltopdf']['install_method']`
 * `recipe[wkhtmltopdf::binary]` Installs wkhtmltoimage and wkhtmltopdf static binaries
 * `recipe[wkhtmltopdf::source]` Installs wkhtmltoimage and wkhtmltopdf from source
 
@@ -52,28 +53,35 @@ version | wkhtmltopdf version to install | String | 0.12.1
 
 ## Testing and Development
 
-Here's how you can quickly get testing or developing against the cookbook thanks to [Vagrant](http://vagrantup.com/) and [Berkshelf](http://berkshelf.com/).
+Here's how you can quickly get testing or developing against the cookbook thanks to [chefspec](https://chefspec.github.io/chefspec/) and [test-kitchen](http://kitchen.ci/).
 
-    vagrant plugin install vagrant-berkshelf
-    vagrant plugin install vagrant-cachier
-    vagrant plugin install vagrant-omnibus
-    git clone git://github.com/bflad/chef-wkhtmltopdf.git
+    git clone git://github.com/Fatsoma/chef-wkhtmltopdf.git
     cd chef-wkhtmltopdf
-    vagrant up BOX # BOX being centos5, centos6, debian7, fedora18, fedora19, fedora20, freebsd9, ubuntu1204, ubuntu1210, ubuntu1304, or ubuntu1310
 
-You can then SSH into the running VM using the `vagrant ssh BOX` command.
+Run chefspec with:
 
-The VM can easily be stopped and deleted with the `vagrant destroy` command. Please see the official [Vagrant documentation](http://docs.vagrantup.com/v2/cli/index.html) for a more in depth explanation of available commands.
+    rspec
+
+Find kitchen suites (from `.kitchen.yml`) and run them (specifying by `NAME`):
+
+    kitchen list
+    kitchen test NAME
+
+You can bring up a VM to login to with (specifying `NAME`):
+
+    kitchen test -d never NAME
+    kitchen login NAME
+    kitchen destroy NAME
 
 ## Contributing
 
-Please use standard Github issues/pull requests and if possible, in combination with testing on the Vagrant boxes.
+Please use standard Github issues/pull requests and if possible, in combination with testing using chefspec and test-kitchen.
 
 ## Maintainers
 
-* Brian Flad (<bflad417@gmail.com>)
+* Bill Ruddock (bill.ruddock@fatsoma.com)
+* Brian Flad (bflad417@gmail.com)
 
 ## License
 
 Please see licensing information in: [LICENSE](LICENSE)
-
