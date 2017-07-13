@@ -20,3 +20,8 @@ supports 'ubuntu'
 depends 'apt'
 depends 'freebsd'
 depends 'ark'
+
+source_url 'https://github.com/Fatsoma/chef-wkhtmltopdf' if respond_to?(:source_url)
+issues_url 'https://github.com/Fatsoma/chef-wkhtmltopdf/issues' if respond_to?(:issues_url)
+
+chef_version '>= 11.0' if respond_to?(:chef_version)
