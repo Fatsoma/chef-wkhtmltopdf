@@ -30,9 +30,13 @@ describe 'wkhtmltopdf::default' do
     it { expect(chef_run).to include_recipe("wkhtmltopdf::#{install_method}") }
 
     jpeg_package = 'libjpeg'
+    archive_packages = %w(xz)
     dependency_packages = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
     dependency_packages.each do |pkg|
       it { expect(chef_run).to install_package(pkg) }
+    end
+    archive_packages.each do |pkg|
+      it { expcet(chef_run).to install_package(pkg) }
     end
   end
 

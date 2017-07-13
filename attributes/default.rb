@@ -56,6 +56,7 @@ when 'debian'
 
 when 'rhel', 'fedora'
   jpeg_package = 'libjpeg'
+  archive_packages = []
   default['wkhtmltopdf']['suffix'] = 'rpm'
   if node['platform_family'] == 'fedora'
     jpeg_package = 'libjpeg-turbo'
@@ -76,8 +77,9 @@ when 'rhel', 'fedora'
     default['wkhtmltopdf']['platform'] = 'linux-generic'
     default['wkhtmltopdf']['suffix'] = 'tar.xz'
     default['wkhtmltopdf']['extracted_name'] = 'wkhtmltox'
+    archive_packages = %w(xz)
   end
-  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
+  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc) + archive_packages
   default['wkhtmltopdf']['architecture'] =
     if node['kernel']['machine'] == 'x86_64'
       'amd64'
