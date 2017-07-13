@@ -20,11 +20,12 @@ when 'windows'
   default['wkhtmltopdf']['suffix'] = 'exe'
   default['wkhtmltopdf']['platform'] = 'mingw-w64-cross'
   # or default['wkhtmltopdf']['platform'] = 'msvc2013'
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'win64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'win32'
-  end
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'win64'
+    else
+      'win32'
+    end
 
 when 'debian'
   jpeg_package = 'libjpeg8'
@@ -41,11 +42,12 @@ when 'debian'
     end
   end
   default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g #{jpeg_package} libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'amd64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'i386'
-  end
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'amd64'
+    else
+      'i386'
+    end
 
 when 'rhel', 'fedora'
   jpeg_package = 'libjpeg'
@@ -66,11 +68,12 @@ when 'rhel', 'fedora'
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
   end
   default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'amd64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'i386'
-  end
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'amd64'
+    else
+      'i386'
+    end
 
 when 'freebsd'
   default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig freetype2 jpeg png libiconv libX11 libXext libXrender)
@@ -108,5 +111,4 @@ else
   default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
 end
 
-parent_folder = node['wkhtmltopdf']['version'].split('.').take(2).join('.')
-default['wkhtmltopdf']['mirror_url'] = "http://download.gna.org/wkhtmltopdf/#{parent_folder}/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
+default['wkhtmltopdf']['mirror_url'] = "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
