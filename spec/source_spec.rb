@@ -89,5 +89,9 @@ describe 'wkhtmltopdf::source' do
       expect(chef_run).to create_link("#{lib_dir}/libwkhtmltox.so.0")
         .with_to("#{lib_dir}/libwkhtmltox.so.#{version}")
     end
+    it do
+      expect(chef_run).to create_link("#{lib_dir}/libwkhtmltox.so")
+        .with_to("#{lib_dir}/libwkhtmltox.so.#{version}")
+    end
   end
 end

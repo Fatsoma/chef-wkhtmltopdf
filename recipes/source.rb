@@ -90,4 +90,8 @@ unless node['wkhtmltopdf']['lib_dir'].empty?
   link "#{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{wkhtmltopdf_version.major}" do
     to "#{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{node['wkhtmltopdf']['version']}"
   end
+
+  link "#{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so" do
+    to "#{node['wkhtmltopdf']['lib_dir']}/libwkhtmltox.so.#{node['wkhtmltopdf']['version']}"
+  end
 end
