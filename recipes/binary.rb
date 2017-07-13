@@ -8,6 +8,13 @@ if node['wkhtmltopdf']['platform'] == 'linux-generic'
     url node['wkhtmltopdf']['mirror_url']
     version node['wkhtmltopdf']['version']
   end
+
+  %w(wkhtmltopdf wkhtmltoimage).each do |binary_name|
+    link File.join(node['wkhtmltopdf']['install_dir'], binary_name) do
+      to File.join(node['ark']['prefix_root'], 'wkhtmltopdf', 'bin', binary_name)
+    end
+  end
+
   unless node['wkhtmltopdf']['lib_dir'].empty?
     link File.join(node['wkhtmltopdf']['lib_dir'], "libwkhtmltox.so.#{node['wkhtmltopdf']['version']}") do
       to File.join(node['ark']['prefix_root'], 'wkhtmltopdf', 'lib', "libwkhtmltox.so.#{node['wkhtmltopdf']['version']}")

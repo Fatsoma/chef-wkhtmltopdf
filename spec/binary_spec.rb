@@ -11,6 +11,7 @@ describe 'wkhtmltopdf::binary' do
     let(:suffix) { 'tar.xz' }
 
     let(:lib_dir) { '/usr/local/lib' }
+    let(:bin_dir) { '/usr/local/bin' }
     let(:home_dir) { '/usr/local/wkhtmltopdf' }
 
     cached(:chef_run) do
@@ -24,6 +25,15 @@ describe 'wkhtmltopdf::binary' do
       expect(chef_run).to install_ark('wkhtmltopdf')
         .with_url(mirror_url)
         .with_version(version)
+    end
+
+    it do
+      expect(chef_run).to create_link("#{bin_dir}/wkhtmltopdf")
+        .with_to("#{home_dir}/bin/wkhtmltopdf")
+    end
+    it do
+      expect(chef_run).to create_link("#{bin_dir}/wkhtmltoimage")
+        .with_to("#{home_dir}/bin/wkhtmltoimage")
     end
 
     it do
