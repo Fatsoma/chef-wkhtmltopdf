@@ -85,6 +85,9 @@ platforms:
 suites:
 - name: default
   run_list: ["recipe[wkhtmltopdf]"]
+  attributes:
+    wkhtmltopdf:
+      lib_dir: /usr/local/lib
 - name: source
   run_list: ["recipe[wkhtmltopdf]"]
   attributes:
