@@ -4,13 +4,6 @@ driver_config:
   require_chef_omnibus: '11.16.4'
 
 platforms:
-- name: centos5
-  driver_config:
-    customize:
-      memory: 1024
-    box: opscode-centos-5.11
-    box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-5.11_chef-provisionerless.box
-    hostname: wkhtmltopdf-centos-5
 - name: centos6
   driver_config:
     customize:
@@ -95,5 +88,3 @@ suites:
       install_method: source
       lib_dir: /usr/local/lib
       build_cache_path: /var/cache/chef/wkhtmltopdf
-  excludes:
-  - centos5 # Python < 2.5
