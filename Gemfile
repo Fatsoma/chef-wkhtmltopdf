@@ -2,6 +2,10 @@ source 'https://rubygems.org'
 
 gem 'rake'
 
+# Lock to Chef 11.16.4 for testing
+gem 'chef', '11.16.4'
+gem 'ffi-yajl', '1.2.0' # Before ffi-yajl/json_gem was deprecated
+
 group :test, :integration do
   gem 'berkshelf', '~> 4.0.1'
 end
