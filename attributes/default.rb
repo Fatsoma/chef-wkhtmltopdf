@@ -1,4 +1,4 @@
-default['wkhtmltopdf']['version']        = '0.12.1'
+default['wkhtmltopdf']['version']        = '0.12.4'
 default['wkhtmltopdf']['install_method'] = 'binary'
 default['wkhtmltopdf']['install_dir']    = '/usr/local/bin'
 default['wkhtmltopdf']['lib_dir']        = ''
@@ -41,6 +41,11 @@ when 'debian'
       default['wkhtmltopdf']['platform'] = 'linux-precise'
     end
   end
+  if Chef::VersionConstraint.new('>= 0.12.3').include?(node['wkhtmltopdf']['version'])
+    default['wkhtmltopdf']['platform'] = 'linux-generic'
+    default['wkhtmltopdf']['suffix'] = 'tar.xz'
+    default['wkhtmltopdf']['extracted_name'] = 'wkhtmltox'
+  end
   default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g #{jpeg_package} libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
   default['wkhtmltopdf']['architecture'] =
     if node['kernel']['machine'] == 'x86_64'
@@ -66,6 +71,11 @@ when 'rhel', 'fedora'
     default['wkhtmltopdf']['platform'] = 'linux-centos6'
   else
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
+  end
+  if Chef::VersionConstraint.new('>= 0.12.3').include?(node['wkhtmltopdf']['version'])
+    default['wkhtmltopdf']['platform'] = 'linux-generic'
+    default['wkhtmltopdf']['suffix'] = 'tar.xz'
+    default['wkhtmltopdf']['extracted_name'] = 'wkhtmltox'
   end
   default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
   default['wkhtmltopdf']['architecture'] =

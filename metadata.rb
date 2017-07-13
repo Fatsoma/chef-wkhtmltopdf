@@ -19,3 +19,4 @@ supports 'ubuntu'
 
 depends 'apt'
 depends 'freebsd'
+depends 'ark'
