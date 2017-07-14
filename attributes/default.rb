@@ -1,4 +1,4 @@
-default['wkhtmltopdf']['version']        = '0.12.1'
+default['wkhtmltopdf']['version']        = '0.12.4'
 default['wkhtmltopdf']['install_method'] = 'binary'
 default['wkhtmltopdf']['install_dir']    = '/usr/local/bin'
 default['wkhtmltopdf']['lib_dir']        = ''
@@ -20,11 +20,12 @@ when 'windows'
   default['wkhtmltopdf']['suffix'] = 'exe'
   default['wkhtmltopdf']['platform'] = 'mingw-w64-cross'
   # or default['wkhtmltopdf']['platform'] = 'msvc2013'
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'win64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'win32'
-  end
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'win64'
+    else
+      'win32'
+    end
 
 when 'debian'
   jpeg_package = 'libjpeg8'
@@ -40,15 +41,22 @@ when 'debian'
       default['wkhtmltopdf']['platform'] = 'linux-precise'
     end
   end
-  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g #{jpeg_package} libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'amd64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'i386'
+  if Chef::VersionConstraint.new('>= 0.12.3').include?(node['wkhtmltopdf']['version'])
+    default['wkhtmltopdf']['platform'] = 'linux-generic'
+    default['wkhtmltopdf']['suffix'] = 'tar.xz'
+    default['wkhtmltopdf']['extracted_name'] = 'wkhtmltox'
   end
+  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig libfontconfig1 libfreetype6 libpng12-0 zlib1g #{jpeg_package} libssl1.0.0 libx11-6 libxext6 libxrender1 libstdc++6 libc6)
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'amd64'
+    else
+      'i386'
+    end
 
 when 'rhel', 'fedora'
   jpeg_package = 'libjpeg'
+  archive_packages = []
   default['wkhtmltopdf']['suffix'] = 'rpm'
   if node['platform_family'] == 'fedora'
     jpeg_package = 'libjpeg-turbo'
@@ -65,12 +73,19 @@ when 'rhel', 'fedora'
   else
     default['wkhtmltopdf']['platform'] = 'linux-centos5'
   end
-  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc)
-  if node['kernel']['machine'] == 'x86_64'
-    default['wkhtmltopdf']['architecture'] = 'amd64'
-  else
-    default['wkhtmltopdf']['architecture'] = 'i386'
+  if Chef::VersionConstraint.new('>= 0.12.3').include?(node['wkhtmltopdf']['version'])
+    default['wkhtmltopdf']['platform'] = 'linux-generic'
+    default['wkhtmltopdf']['suffix'] = 'tar.xz'
+    default['wkhtmltopdf']['extracted_name'] = 'wkhtmltox'
+    archive_packages = %w(xz)
   end
+  default['wkhtmltopdf']['dependency_packages'] = %W(fontconfig freetype libpng zlib #{jpeg_package} openssl libX11 libXext libXrender libstdc++ glibc) + archive_packages
+  default['wkhtmltopdf']['architecture'] =
+    if node['kernel']['machine'] == 'x86_64'
+      'amd64'
+    else
+      'i386'
+    end
 
 when 'freebsd'
   default['wkhtmltopdf']['dependency_packages'] = %w(fontconfig freetype2 jpeg png libiconv libX11 libXext libXrender)
@@ -108,5 +123,4 @@ else
   default['wkhtmltopdf']['archive'] = "wkhtmltox-#{node['wkhtmltopdf']['version']}_#{node['wkhtmltopdf']['platform']}-#{node['wkhtmltopdf']['architecture']}.#{node['wkhtmltopdf']['suffix']}"
 end
 
-parent_folder = node['wkhtmltopdf']['version'].split('.').take(2).join('.')
-default['wkhtmltopdf']['mirror_url'] = "http://download.gna.org/wkhtmltopdf/#{parent_folder}/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"
+default['wkhtmltopdf']['mirror_url'] = "https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/#{node['wkhtmltopdf']['version']}/#{node['wkhtmltopdf']['archive']}"

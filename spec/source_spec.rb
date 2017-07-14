@@ -15,7 +15,7 @@ describe 'wkhtmltopdf::source' do
   end
 
   let(:cache_dir) { '/test/cache' }
-  let(:version) { '0.12.1' }
+  let(:version) { '0.12.4' }
   let(:archive) { "wkhtmltox-#{version}.tar.bz2" }
   let(:download_dest) { File.join(cache_dir, archive) }
   let(:install_dir) { '/test/bin' }
@@ -87,6 +87,10 @@ describe 'wkhtmltopdf::source' do
     end
     it do
       expect(chef_run).to create_link("#{lib_dir}/libwkhtmltox.so.0")
+        .with_to("#{lib_dir}/libwkhtmltox.so.#{version}")
+    end
+    it do
+      expect(chef_run).to create_link("#{lib_dir}/libwkhtmltox.so")
         .with_to("#{lib_dir}/libwkhtmltox.so.#{version}")
     end
   end

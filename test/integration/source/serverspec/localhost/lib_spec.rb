@@ -1,19 +1,24 @@
 require 'spec_helper'
 
 describe 'libraries' do
-  let(:lib_dir) { '/usr/local/lib' }
-  let(:version) { '0.12.1' }
+  lib_dir = '/usr/local/lib'
+  version = '0.12.4'
 
-  describe file('/usr/local/lib/libwkhtmltox.so.0.12.1') do
+  describe file("#{lib_dir}/libwkhtmltox.so.#{version}") do
     it { should be_file }
   end
 
-  describe file('/usr/local/lib/libwkhtmltox.so.0.12') do
+  describe file("#{lib_dir}/libwkhtmltox.so.0.12") do
     it { should be_symlink }
     it { should be_linked_to "#{lib_dir}/libwkhtmltox.so.#{version}" }
   end
 
-  describe file('/usr/local/lib/libwkhtmltox.so.0') do
+  describe file("#{lib_dir}/libwkhtmltox.so.0") do
+    it { should be_symlink }
+    it { should be_linked_to "#{lib_dir}/libwkhtmltox.so.#{version}" }
+  end
+
+  describe file("#{lib_dir}/libwkhtmltox.so") do
     it { should be_symlink }
     it { should be_linked_to "#{lib_dir}/libwkhtmltox.so.#{version}" }
   end
